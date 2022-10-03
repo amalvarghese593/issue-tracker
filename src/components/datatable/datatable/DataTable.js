@@ -504,13 +504,9 @@ const CollapseButton = ({ collapsed, handleCollapse, index }) => {
         }
       >
         {index === collapsed ? (
-          // <i className="fa fa-minus-circle me-2 fs-18 text-primary"></i>
-          // <i className="fa-regular fa-minus"></i>
           <i className="fa-solid fa-minus"></i>
         ) : (
-          // <i className="fa-regular fa-plus"></i>
           <i className="fa-solid fa-plus"></i>
-          // <i className="fa fa-plus-circle fs-18 text-secondary"></i>
         )}
       </button>
     </Fragment>

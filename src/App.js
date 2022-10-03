@@ -25,8 +25,8 @@ function App() {
         </nav>
       </menu>
       <Routes>
-        <Route path="/" element={<Navigate to="/helpdesk" />} />
-        <Route path="/helpdesk" element={<IssueList />} />
+        {/* <Route path="/" element={<Navigate to="/helpdesk" />} /> */}
+        <Route path="/" element={<IssueList />} />
         <Route path="/raise-ticket" element={<RaiseTicket />} />
       </Routes>
     </div>

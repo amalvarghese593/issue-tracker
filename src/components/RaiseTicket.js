@@ -14,9 +14,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 export const RaiseTicket = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  let initialValues;
   const getPersist = (key) => location.state?.data?.[key] || "";
-  initialValues = {
+  const initialValues = {
     appName: getPersist("appName"),
     title: getPersist("title"),
     priority: getPersist("priority") || "High",
@@ -64,8 +63,8 @@ export const RaiseTicket = () => {
     { id: 3, priority: "Low", color: "#cfcf10" },
   ];
   const ticketOptions = [
-    "Did not receive OTP?",
-    "Unable to sign-in/sign-up?",
+    // "Did not receive OTP?",
+    // "Unable to sign-in/sign-up?",
     "I want to report a bug",
     "What is WebPipl Customer Care Number?",
     "I want to provide feedback",
@@ -78,9 +77,7 @@ export const RaiseTicket = () => {
   };
   return (
     <div className="form-container">
-      <form
-        /* onSubmit={formik.handleSubmit} */ className="form-tracker shadow"
-      >
+      <form className="form-tracker shadow">
         <h2 className="mb-5 fs-30">Raise your ticket</h2>
         <label htmlFor="appname" className="mb-3">
           Application Name
