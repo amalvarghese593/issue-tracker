@@ -76,13 +76,16 @@ export const RaiseTicket = () => {
     "I want to consult Marketing team",
     "I want to consult HR team",
   ];
-  const cancelTicket = (e) => {
+  const goBack = (e) => {
     navigate("/", true);
   };
   return (
     <div className="form-container">
       <form className="form-tracker shadow">
-        <h2 className="mb-5 fs-30">Raise your ticket</h2>
+        <div className="header-cntr mb-5">
+          <h2 className="fs-30">Raise your ticket</h2>
+          <BackArrow onClick={goBack} />
+        </div>
         <label htmlFor="appname" className="mb-3">
           Application Name
         </label>
@@ -173,12 +176,13 @@ export const RaiseTicket = () => {
           setFieldValue={formik.setFieldValue}
         />
         <div className="submit-btn-container">
-          <button className="btn me-3" onClick={cancelTicket}>
+          <button className="btn me-3" onClick={goBack}>
             Cancel
           </button>
           <button
             className="btn btn-primary"
-            /* type="submit" */ onClick={formik.handleSubmit}>
+            /* type="submit" */ onClick={formik.handleSubmit}
+          >
             Submit ticket
           </button>
         </div>
@@ -186,3 +190,20 @@ export const RaiseTicket = () => {
     </div>
   );
 };
+
+const BackArrow = ({ onClick }) => (
+  <svg
+    onClick={onClick}
+    xmlns="http://www.w3.org/2000/svg"
+    width="26"
+    height="26"
+    fill="currentColor"
+    className="bi bi-arrow-left-circle"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fillRule="evenodd"
+      d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+    />
+  </svg>
+);

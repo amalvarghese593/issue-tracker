@@ -178,3 +178,14 @@ svg.form-select-arrow {
   border-radius: 12px;
   background-color: #212529;
 }
+/* header container */
+.header-cntr {
+  display: flex;
+  align-items: center;
+}
+.header-cntr svg {
+  margin-left: auto;
+}
+.header-cntr svg:hover {
+  cursor: pointer;
+}

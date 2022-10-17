@@ -131,6 +131,9 @@ const DataTable = ({
 
   const [expanded, setExpanded] = React.useState({ firstName: true });
   const [collapsed, setCollapsed] = useState("");
+  useEffect(() => {
+    setCollapsed("");
+  }, [data]);
   const {
     getTableProps,
     getTableBodyProps,

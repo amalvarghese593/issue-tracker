@@ -29,7 +29,8 @@ function App() {
         /> */}
           <Route
             // path="/"
-            element={<PrivateRoute redirectTo="/not-authenticated" />}>
+            element={<PrivateRoute redirectTo="/not-authenticated" />}
+          >
             <Route index element={<IssueList />} />
             <Route path="raise-ticket" element={<RaiseTicket />} />
           </Route>
