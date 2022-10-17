@@ -10,8 +10,7 @@ export const columns = [
       return (
         <div
           className="flex items-start flex-column"
-          style={{ display: "inline-block", marginLeft: "10px" }}
-        >
+          style={{ display: "inline-block", marginLeft: "10px" }}>
           {original.appName}
         </div>
       );
@@ -58,22 +57,22 @@ export const columns = [
     breakpoint: "",
     Cell: ({ row: { original } }) => {
       const colorScheme = {
-        High: "red",
-        Medium: "orange",
-        Low: "yellow",
+        High: { bg: "#dc354540", color: "#dc3545" },
+        Medium: { bg: "#ffa50054", color: "#ab7004" },
+        Low: { bg: "#fafac8", color: "#cccc0d" },
       };
       return (
         <div className="flex items-start">
           <div
             className="flex items-start flex-column"
             style={{
-              backgroundColor: colorScheme[original.priority],
-              color: "#fff",
-              padding: "5px 10px",
-              borderRadius: "5px",
+              backgroundColor: colorScheme[original.priority]?.bg,
+              color: colorScheme[original.priority]?.color,
+              padding: "4px 4px",
+              borderRadius: "9px",
               display: "inline-block",
-            }}
-          >
+              fontWeight: "bold",
+            }}>
             {original.priority}
           </div>
         </div>
@@ -97,6 +96,11 @@ export const columns = [
     },
   },
   {
+    accessor: "createdBy.name",
+    Header: "Created by",
+    breakpoint: "xs sm md lg xlg",
+  },
+  {
     accessor: "status",
     Header: "Status",
     breakpoint: "xs",
@@ -108,13 +112,19 @@ export const columns = [
           {role === "dev" ? (
             <div
               className="flex items-start flex-column"
-              style={{ width: "75%" }}
-            >
-              <Select options={["Resolved", "Unresolved"]} height="40px" />
+              style={{ width: "75%" }}>
+              <Select
+                options={["Resolved", "Unresolved", "In Progress"]}
+                height="40px"
+              />
             </div>
           ) : (
             <span>
-              {original.status === "open" ? "Unresolved" : "Resolved"}
+              {original.status === "open"
+                ? "Unresolved"
+                : original.status === "In Progress"
+                ? "In Progress"
+                : "Resolved"}
             </span>
           )}
         </div>
@@ -138,7 +148,7 @@ export const columns = [
             // style={{ width: "75%" }}
           >
             {/* <Select options={["Resolved", "Unresolved"]} height="40px" /> */}
-            <button className="btn btn-secondary" onClick={raiseTicket}>
+            <button className="btn button btn-secondary" onClick={raiseTicket}>
               Raise ticket
             </button>
           </div>

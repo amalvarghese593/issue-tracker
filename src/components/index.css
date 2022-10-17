@@ -172,3 +172,9 @@ svg.form-select-arrow {
 .thumbnail:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
+
+.btn.button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  background-color: #212529;
+}

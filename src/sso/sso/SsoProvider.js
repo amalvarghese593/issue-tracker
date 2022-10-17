@@ -33,7 +33,8 @@ const SsoProvider = ({ children, client = keyCloack }) => {
             window.location.origin + "/silent-check-sso.html",
           pkceMethod: "S256",
         })
-        .then(() => {});
+        .then(() => {})
+        .catch((error) => {});
       resolve(newJ);
     })
       .then(async () => {
@@ -43,20 +44,12 @@ const SsoProvider = ({ children, client = keyCloack }) => {
           isTokenExpired: client.isTokenExpired,
           refreshToken: client.refreshToken,
           token: client.token,
-
           sso: client,
         }));
-        // dispatch({
-        //   type: "SSO_SUCCESS",
-        //   sso: client,
-        // });
-        // dispatch({
-        //   payload: await client.loadUserInfo(),
-        //   type: "SET_USER_INFO",
-        // });
       })
       .catch((error) => {
         console.log("Error:Authentication: ", error);
+        console.log("Client: ", client);
       });
 
     /*eslint-disable react-hooks/exhaustive-deps */
@@ -73,8 +66,7 @@ const SsoProvider = ({ children, client = keyCloack }) => {
         sso: client,
         hasRole: hasRole,
         handleLogout: client.logout,
-      }}
-    >
+      }}>
       {children}
     </SsoContext.Provider>
   );

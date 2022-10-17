@@ -3,7 +3,7 @@ import Keycloak from "keycloak-js";
 const keyCloack = new Keycloak({
   url: "https://account.webpipl.com",
   realm: "master-webpipl",
-  clientId: process.env.REACT_APP_KC_CLIENT_ID,
+  clientId: "webpipl-issues",
 });
 
 const initKc = () => {};

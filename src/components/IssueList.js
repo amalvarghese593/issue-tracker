@@ -2,28 +2,36 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "./datatable/datatable/DataTable";
 import { columns } from "./usage";
+import { useSso } from "../sso/sso/SsoProvider";
+import { IDLE } from "../sso/constants";
 
 export const IssueList = () => {
   const [data, setData] = useState([]);
+  const { token } = useSso();
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get(
-          "https://nextmov.webpipl.com/api/v1/auth/issueTracker"
-        );
+        let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker`;
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setData(res.data.result);
       } catch (err) {
         console.log({ err });
       }
     };
-    fetch();
-  }, []);
+    if (token && token !== IDLE) {
+      fetch();
+    }
+  }, [token]);
   return (
-    <div className="pb-30">
-      <main>
+    <div className="pb-30" style={{ marginTop: "60px" }}>
+      <main className="container-fluid">
         <section className="container issues-wrapper">
           <div className="issues-container shadow text-start">
-            <h2 className="mb-3 fs-30">Frequent issues</h2>
+            <h2 className="mb-3 fs-30">New issues</h2>
             <DataTable columns={columns} data={data} />
           </div>
         </section>

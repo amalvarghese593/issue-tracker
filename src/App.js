@@ -29,8 +29,7 @@ function App() {
         /> */}
           <Route
             // path="/"
-            element={<PrivateRoute redirectTo="/not-authenticated" />}
-          >
+            element={<PrivateRoute redirectTo="/not-authenticated" />}>
             <Route index element={<IssueList />} />
             <Route path="raise-ticket" element={<RaiseTicket />} />
           </Route>
@@ -50,7 +49,7 @@ const Homepage = () => {
   const location = useLocation();
   return (
     <>
-      <menu className="bg-light">
+      <menu className="bg-light container-fluid">
         <nav className="container navbar">
           <img src="./webpipl-logo.png" alt="logo" width={"150px"} />
           {location.pathname === "/" && <RaiseTktBtn />}
@@ -66,7 +65,7 @@ const RaiseTktBtn = () => {
   const raiseTicket = () => navigate("/raise-ticket");
   return (
     <div className="raise-ticket-btn-container">
-      <button className="btn btn-secondary" onClick={raiseTicket}>
+      <button className="btn button btn-secondary" onClick={raiseTicket}>
         Raise new ticket
       </button>
     </div>

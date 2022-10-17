@@ -10,10 +10,12 @@ import { FileUpload } from "./FileUpload";
 import axios from "axios";
 import Input from "./forms-controls/forms/Input";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSso } from "../sso/sso/SsoProvider";
 
 export const RaiseTicket = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { token } = useSso();
   const getPersist = (key) => location.state?.data?.[key] || "";
   const initialValues = {
     appName: getPersist("appName"),
@@ -38,18 +40,22 @@ export const RaiseTicket = () => {
         for (const key in values) {
           formData.append(key, values[key]);
         }
+        let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker`;
+
         const res = await axios({
           method: "POST",
-          url: "https://nextmov.webpipl.com/api/v1/auth/issueTracker",
+          url: url,
           data: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
-        console.log({ res });
+        navigate("/", { replace: true });
       } catch (err) {
         console.log({ err });
       }
     };
     fetch();
-    alert("submitted");
   };
   const formik = useFormik({
     initialValues,
@@ -63,8 +69,6 @@ export const RaiseTicket = () => {
     { id: 3, priority: "Low", color: "#cfcf10" },
   ];
   const ticketOptions = [
-    // "Did not receive OTP?",
-    // "Unable to sign-in/sign-up?",
     "I want to report a bug",
     "What is WebPipl Customer Care Number?",
     "I want to provide feedback",
@@ -73,7 +77,7 @@ export const RaiseTicket = () => {
     "I want to consult HR team",
   ];
   const cancelTicket = (e) => {
-    navigate("/helpdesk", true);
+    navigate("/", true);
   };
   return (
     <div className="form-container">
@@ -174,8 +178,7 @@ export const RaiseTicket = () => {
           </button>
           <button
             className="btn btn-primary"
-            /* type="submit" */ onClick={formik.handleSubmit}
-          >
+            /* type="submit" */ onClick={formik.handleSubmit}>
             Submit ticket
           </button>
         </div>
