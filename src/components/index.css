@@ -189,3 +189,22 @@ svg.form-select-arrow {
 .header-cntr svg:hover {
   cursor: pointer;
 }
+/* popover styling */
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.z-100 {
+  z-index: 100;
+}
+.popover-pnl {
+  border: 1px solid red !important;
+  width: 500px;
+  height: 80px !important;
+  background-color: #fff;
+  left: 100%;
+  top: 0;
+  display: flex;
+}

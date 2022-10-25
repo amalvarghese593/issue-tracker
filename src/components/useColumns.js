@@ -1,14 +1,16 @@
+import React, { useEffect } from "react";
 import Select from "./forms-controls/forms/Select";
-import { useNavigate } from "react-router-dom";
 import { useSso } from "../sso/sso/SsoProvider";
 import axios from "axios";
 import { IDLE } from "../sso/constants";
 import { replace } from "formik";
 import { useState } from "react";
+// import { Popover } from "@headlessui/react";
+import { PopoverCustom } from "./Popover";
+import img from "../assets/images/issue.jpg";
 
 export const useCloumns = () => {
   const { token } = useSso();
-  // const navigate = useNavigate();
   const [isDeleted, setIsDeleted] = useState();
   const columns = [
     {
@@ -32,7 +34,18 @@ export const useCloumns = () => {
       breakpoint: "xs sm",
       Cell: ({ row: { original } }) => {
         return (
-          <div className="flex items-start flex-column">{original.title}</div>
+          <div className="popover-cntr">
+            <PopoverCustom
+              label={original.title}
+              components={{
+                BtnControl: React.forwardRef((props, ref) => (
+                  <BtnControl {...props} ref={ref} />
+                )),
+              }}
+            >
+              <PanelContent title={original.title} />
+            </PopoverCustom>
+          </div>
         );
       },
     },
@@ -134,13 +147,15 @@ export const useCloumns = () => {
           const fetch = async () => {
             try {
               let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker/updateIssueStatus/${original._id}`;
-              const res = await axios.put(url, {
+              console.log({ token });
+              const res = await axios({
+                url,
+                method: "PUT",
                 data: { status: e.target.value },
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               });
-              console.log("status: ", res);
             } catch (err) {
               console.log({ err });
             }
@@ -193,7 +208,8 @@ export const useCloumns = () => {
                   Authorization: `Bearer ${token}`,
                 },
               });
-              setIsDeleted((prev) => !prev);
+              setIsDeleted(original._id);
+              // setIsDeleted((prev) => !prev);
             } catch (err) {
               console.log({ err });
             }
@@ -282,3 +298,26 @@ export const useCloumns = () => {
   ];
   return { columns, isDeleted };
 };
+
+const PanelContent = ({ title }) => {
+  return (
+    <>
+      <h1>{title}</h1>
+      <img src={img} alt="No image" />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptas.
+        Nemo rerum cupiditate sed accusantium praesentium repudiandae
+        repellendus consectetur. Magni labore consequatur iusto officiis? Quis,
+        quidem? Illo veniam facere eum.
+      </p>
+    </>
+  );
+};
+
+const BtnControl = React.forwardRef(({ label }, ref) => {
+  return (
+    <button ref={ref} type="button" style={{ backgroundColor: "red" }}>
+      {label}
+    </button>
+  );
+});
