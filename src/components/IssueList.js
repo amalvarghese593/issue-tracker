@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import DataTable from "./datatable/datatable/DataTable";
 import { useSso } from "../sso/sso/SsoProvider";
@@ -7,6 +7,7 @@ import { useCloumns } from "./useColumns";
 import "./index.css";
 
 export const IssueList = () => {
+  const dataRef = useRef([]);
   const [data, setData] = useState([]);
   const { columns, isDeleted } = useCloumns();
   const { token } = useSso();
@@ -19,6 +20,7 @@ export const IssueList = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        dataRef.current = res.data.result;
         setData(res.data.result);
       } catch (err) {
         console.log({ err });
@@ -30,8 +32,12 @@ export const IssueList = () => {
   }, [token]);
 
   const currentData = React.useMemo(() => {
-    if (isDeleted) return data.filter((item) => item._id !== isDeleted);
-    return data;
+    if (isDeleted) {
+      dataRef.current = dataRef.current.filter(
+        (item) => item._id !== isDeleted
+      );
+    }
+    return dataRef.current;
   }, [data, isDeleted]);
   return (
     <div className="pb-30" style={{ marginTop: "60px" }}>

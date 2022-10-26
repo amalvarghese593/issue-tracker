@@ -1,42 +1,23 @@
-import React, { forwardRef, useEffect, useRef } from "react";
+import React, { forwardRef, useRef } from "react";
 import { Popover } from "@headlessui/react";
+import { useForwardRef } from "../hooks/useForwardRef";
 
-const useForwardRef = (ref) => {
-  const innerRef = useRef(null);
-  useEffect(() => {
-    if (!ref) return;
-    if (typeof ref === "function") {
-      ref(innerRef.current);
-    } else {
-      ref.current = innerRef.current;
-      // innerRef.current = ref.current;
-    }
-  }, []);
-  return innerRef;
-};
-
-export const PopoverCustom = ({ label, components: Components, children }) => {
+export const PopoverCustom = ({ label, component: Component, children }) => {
   const panelRef = useRef();
   const btnRef = useRef();
   return (
-    <>
-      <Popover className="relative" style={{ display: "inline-block" }}>
-        <Popover.Button
-          as={PopoverButton}
-          customBtn={Components?.BtnControl}
-          ref={btnRef}
-        >
-          {label}
-        </Popover.Button>
-        <Popover.Panel
-          as={PopoverPanel}
-          className="absolute z-100 popover-pnl"
-          ref={panelRef}
-        >
-          {children}
-        </Popover.Panel>
-      </Popover>
-    </>
+    <Popover className="relative" style={{ display: "inline-block" }}>
+      <Popover.Button as={PopoverButton} customBtn={Component} ref={btnRef}>
+        {label}
+      </Popover.Button>
+      <Popover.Panel
+        as={PopoverPanel}
+        className="absolute z-100 popover-pnl"
+        ref={panelRef}
+      >
+        {children}
+      </Popover.Panel>
+    </Popover>
   );
 };
 
@@ -93,24 +74,3 @@ const PopoverPanel = forwardRef((props, ref) => {
     </div>
   );
 });
-
-const PopoverImage = ({ source }) => {
-  return <img className="image" src={source} alt="No image" />;
-};
-Popover.Image = PopoverImage;
-
-const PopoverTitle = ({ title }) => {
-  useEffect(() => {
-    console.log("title rendered");
-    return () => console.log("title unmounted");
-  }, []);
-  return title ? <span className="title">{title}</span> : undefined;
-};
-Popover.Title = PopoverTitle;
-
-const PopoverDescription = ({ description }) => {
-  return description ? (
-    <span className="description">{description}</span>
-  ) : undefined;
-};
-Popover.Description = PopoverDescription;

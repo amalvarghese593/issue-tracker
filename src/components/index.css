@@ -208,3 +208,12 @@ svg.form-select-arrow {
   top: 0;
   display: flex;
 }
+@media (max-width: 920px) {
+  .popover-pnl {
+    position: fixed;
+    z-index: 1001;
+    width: auto;
+    height: auto !important;
+    inset: 100px;
+  }
+}

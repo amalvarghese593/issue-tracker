@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Select from "./forms-controls/forms/Select";
 import { useSso } from "../sso/sso/SsoProvider";
 import axios from "axios";
 import { IDLE } from "../sso/constants";
 import { replace } from "formik";
 import { useState } from "react";
-// import { Popover } from "@headlessui/react";
 import { PopoverCustom } from "./Popover";
 import img from "../assets/images/issue.jpg";
 
@@ -35,14 +34,7 @@ export const useCloumns = () => {
       Cell: ({ row: { original } }) => {
         return (
           <div className="popover-cntr">
-            <PopoverCustom
-              label={original.title}
-              components={{
-                BtnControl: React.forwardRef((props, ref) => (
-                  <BtnControl {...props} ref={ref} />
-                )),
-              }}
-            >
+            <PopoverCustom label={original.title} component={BtnControl}>
               <PanelContent title={original.title} />
             </PopoverCustom>
           </div>
@@ -314,9 +306,19 @@ const PanelContent = ({ title }) => {
   );
 };
 
-const BtnControl = React.forwardRef(({ label }, ref) => {
+const BtnControl = React.forwardRef(({ label, ...rest }, ref) => {
   return (
-    <button ref={ref} type="button" style={{ backgroundColor: "red" }}>
+    <button
+      ref={ref}
+      {...rest}
+      type="button"
+      style={{
+        backgroundColor: "red",
+        border: "none",
+        outline: "none",
+        padding: "5px",
+      }}
+    >
       {label}
     </button>
   );
