@@ -313,10 +313,10 @@ const BtnControl = React.forwardRef(({ label, ...rest }, ref) => {
       {...rest}
       type="button"
       style={{
-        backgroundColor: "red",
         border: "none",
         outline: "none",
         padding: "5px",
+        textDecoration: "underline",
       }}
     >
       {label}
