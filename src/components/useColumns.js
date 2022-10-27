@@ -227,66 +227,6 @@ export const useCloumns = () => {
         );
       },
     },
-    //   {
-    //     accessor: "jobId",
-    //     Header: "Job ID",
-    //     Cell: ({ row: { original } }) => {
-    //       return (
-    //         <NavLink to={`/app/candidate/jobs/${original?._id}`}>
-    //           {original?.jobId}
-    //         </NavLink>
-    //       );
-    //     },
-    //   },
-    //   {
-    //     accessor: "jobTitle",
-    //     Header: "Job Title",
-    //   },
-    //   {
-    //     accessor: "salary",
-    //     Header: (
-    //       <span>
-    //         CTC <sub>in Lacs</sub>
-    //       </span>
-    //     ),
-    //   },
-    //   {
-    //     accessor: "experience",
-    //     Header: (
-    //       <span>
-    //         Experience <sub>in Years</sub>
-    //       </span>
-    //     ),
-    //   },
-    //   {
-    //     accessor: "skills",
-    //     Header: "Skills",
-    //   Cell: ({ row: { original } }) => {
-    //     return original?.skills?.map((skill, idx) => (
-    //       <span className="chip me-1" key={idx}>
-    //         {skill}
-    //       </span>
-    //     ));
-    //   },
-    //   },
-
-    //   {
-    //     accessor: "name",
-    //     Header: () => "Apply",
-    //     Cell: ({ row: { original } }) => {
-    //       return <div className="flex items-center flex-column"></div>;
-    //     },
-    //   },
-    // {
-    //   accessor: (row) =>
-    //     getLatestSchedule(row?.candidates)?.slotId?.dateAndTime
-    //       ? formatDate(
-    //           getLatestSchedule(row?.candidates)?.slotId?.dateAndTime,
-    //           "MMM do yyyy h:mm a"
-    //         )
-    //       : "Not scheduled",
-    //   Header: "Schedule Date",
-    // },
   ];
   return { columns, isDeleted };
 };
