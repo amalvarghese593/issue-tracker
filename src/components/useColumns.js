@@ -167,6 +167,7 @@ export const useCloumns = () => {
                   options={["Resolved", "Unresolved", "In Progress"]}
                   height="40px"
                   onChange={updateStatus}
+                  value={original.status}
                 />
               </div>
             ) : (
