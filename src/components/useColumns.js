@@ -7,10 +7,13 @@ import { replace } from "formik";
 import { useState } from "react";
 import { PopoverCustom } from "./Popover";
 import img from "../assets/images/issue.jpg";
+import { useApicall } from "../hooks/useApicall";
+import { useIssuesData } from "../data-store/data-context";
 
 export const useCloumns = () => {
   const { token } = useSso();
-  const [isDeleted, setIsDeleted] = useState();
+  const { setData } = useIssuesData();
+  // const [isDeleted, setIsDeleted] = useState();
   const columns = [
     {
       accessor: "appName",
@@ -192,24 +195,15 @@ export const useCloumns = () => {
         // const raiseTicket = (e) => {
         //   navigate("/raise-ticket", { state: { data: original } });
         // };
-        const deleteTicket = () => {
-          const fetch = async () => {
-            try {
-              let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker/${original._id}`;
-              const res = await axios.delete(url, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              setIsDeleted(original._id);
-              // setIsDeleted((prev) => !prev);
-            } catch (err) {
-              console.log({ err });
-            }
-          };
-          if (token && token !== IDLE) {
-            fetch();
-          }
+        const { fetchRef } = useApicall({
+          path: `/api/v1/auth/issueTracker/${original._id}`,
+          method: "delete",
+          token,
+        });
+        console.log("ftch: ", fetchRef.current);
+        const deleteTicket = async () => {
+          if (token && token !== IDLE) fetchRef.current?.();
+          setData((prev) => prev.filter((item) => item._id !== original._id));
         };
         return (
           <div>
@@ -229,7 +223,7 @@ export const useCloumns = () => {
       },
     },
   ];
-  return { columns, isDeleted };
+  return { columns };
 };
 
 const PanelContent = ({ title }) => {

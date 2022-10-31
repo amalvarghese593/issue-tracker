@@ -5,6 +5,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PrivateRoute } from "./components/routing/PrivateRoute";
 import React from "react";
+import { IssuesProvider } from "./data-store/data-context";
 
 function App() {
   return (
@@ -31,7 +32,14 @@ function App() {
             // path="/"
             element={<PrivateRoute redirectTo="/not-authenticated" />}
           >
-            <Route index element={<IssueList />} />
+            <Route
+              index
+              element={
+                <IssuesProvider>
+                  <IssueList />
+                </IssuesProvider>
+              }
+            />
             <Route path="raise-ticket" element={<RaiseTicket />} />
           </Route>
           <Route
