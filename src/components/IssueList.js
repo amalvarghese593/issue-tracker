@@ -5,7 +5,7 @@ import { useSso } from "../sso/sso/SsoProvider";
 import { IDLE } from "../sso/constants";
 import { useCloumns } from "./useColumns";
 import "./index.css";
-import { useIssuesData } from "../data-store/data-context";
+import { useIssuesData } from "../data-store/issue-context";
 
 export const IssueList = () => {
   // const dataRef = useRef([]);

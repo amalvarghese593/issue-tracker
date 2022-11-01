@@ -11,8 +11,11 @@ import axios from "axios";
 import Input from "./forms-controls/forms/Input";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSso } from "../sso/sso/SsoProvider";
+import { useApicall } from "../hooks/useApicall";
+import { useErrorContext } from "../data-store/error-context";
 
 export const RaiseTicket = () => {
+  const { setError } = useErrorContext();
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = useSso();
@@ -33,29 +36,26 @@ export const RaiseTicket = () => {
     description: Yup.string().required("Required"),
     image: Yup.mixed(),
   });
-  const onSubmit = (values) => {
-    const fetch = async () => {
-      try {
-        const formData = new FormData();
-        for (const key in values) {
-          formData.append(key, values[key]);
-        }
-        let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker`;
+  const { fetchRef /* error  */ } = useApicall({
+    path: "/api/v1/auth/issueTracker",
+    method: "post",
+    token,
+    // getError: (o) => o.message,
+    onSuccess: (res) => {
+      navigate("/", { replace: true });
+    },
+    onError: (err) => {
+      setError(err);
+    },
+  });
 
-        const res = await axios({
-          method: "POST",
-          url: url,
-          data: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        navigate("/", { replace: true });
-      } catch (err) {
-        console.log({ err });
-      }
-    };
-    fetch();
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+    for (const key in values) {
+      formData.append(key, values[key]);
+    }
+    await fetchRef.current?.(formData);
+    // if (!error) navigate("/", { replace: true });
   };
   const formik = useFormik({
     initialValues,
@@ -76,7 +76,7 @@ export const RaiseTicket = () => {
     "I want to consult Marketing team",
     "I want to consult HR team",
   ];
-  const goBack = (e) => {
+  const goBack = () => {
     navigate("/", true);
   };
   return (

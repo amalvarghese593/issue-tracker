@@ -8,12 +8,14 @@ import { useState } from "react";
 import { PopoverCustom } from "./Popover";
 import img from "../assets/images/issue.jpg";
 import { useApicall } from "../hooks/useApicall";
-import { useIssuesData } from "../data-store/data-context";
+import { useIssuesData } from "../data-store/issue-context";
+import { removeArrayItems } from "../utils/removeArrayItems";
+import { useErrorContext } from "../data-store/error-context";
 
 export const useCloumns = () => {
+  const { setError } = useErrorContext();
   const { token } = useSso();
-  const { setData } = useIssuesData();
-  // const [isDeleted, setIsDeleted] = useState();
+  const { setData, data } = useIssuesData();
   const columns = [
     {
       accessor: "appName",
@@ -137,26 +139,18 @@ export const useCloumns = () => {
       breakpoint: "xs",
 
       Cell: ({ row: { original } }) => {
+        const [status, setStatus] = useState(original.status);
         const role = "dev";
+        const { fetchRef } = useApicall({
+          path: `/api/v1/auth/issueTracker/updateIssueStatus/${original._id}`,
+          method: "put",
+          token,
+          onError: (err) => setError(err),
+        });
         const updateStatus = (e) => {
-          const fetch = async () => {
-            try {
-              let url = `${process.env.REACT_APP_API_URL}/api/v1/auth/issueTracker/updateIssueStatus/${original._id}`;
-              console.log({ token });
-              const res = await axios({
-                url,
-                method: "PUT",
-                data: { status: e.target.value },
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-            } catch (err) {
-              console.log({ err });
-            }
-          };
           if (token && token !== IDLE) {
-            fetch();
+            fetchRef.current?.({ status: e.target.value });
+            setStatus(e.target.value);
           }
         };
         return (
@@ -170,7 +164,7 @@ export const useCloumns = () => {
                   options={["Resolved", "Unresolved", "In Progress"]}
                   height="40px"
                   onChange={updateStatus}
-                  value={original.status}
+                  value={status}
                 />
               </div>
             ) : (
@@ -199,11 +193,15 @@ export const useCloumns = () => {
           path: `/api/v1/auth/issueTracker/${original._id}`,
           method: "delete",
           token,
+          onError: (err) => setError(err),
         });
-        console.log("ftch: ", fetchRef.current);
-        const deleteTicket = async () => {
-          if (token && token !== IDLE) fetchRef.current?.();
-          setData((prev) => prev.filter((item) => item._id !== original._id));
+        const deleteTicket = () => {
+          if (token && token !== IDLE) {
+            fetchRef.current?.();
+            setData((prev) => prev.filter((item) => item._id !== original._id));
+            // const idx = data.findIndex((item) => item._id === original._id);
+            // setData((prev) => removeArrayItems(prev, idx, 1));
+          }
         };
         return (
           <div>

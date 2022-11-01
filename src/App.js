@@ -5,11 +5,15 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PrivateRoute } from "./components/routing/PrivateRoute";
 import React from "react";
-import { IssuesProvider } from "./data-store/data-context";
+import { IssuesProvider } from "./data-store/issue-context";
+import { ErrorBanner } from "./components/error-banner-component/ErrorBanner";
+import { useErrorContext } from "./data-store/error-context";
 
 function App() {
+  const { error } = useErrorContext();
   return (
     <div className="App">
+      {error && <ErrorBanner msg={error.message || "my custom error"} />}
       <Routes>
         <Route path="/" element={<Homepage />}>
           {/* <Route

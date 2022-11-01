@@ -1,0 +1,22 @@
+.err-bnr-cntr {
+  position: fixed;
+  z-index: 100000000;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  animation: flyup 0.4s;
+}
+@keyframes flyup {
+  from {
+    top: 100%;
+    transform: rotate(20deg);
+  }
+}
