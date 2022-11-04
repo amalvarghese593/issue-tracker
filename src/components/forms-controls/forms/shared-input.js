@@ -27,11 +27,10 @@ export const sharedStyle = css`
   -webkit-appearance: none;
   -moz-appearance: none;
   &:focus {
-    outline: 0;
+    outline: 1px solid #555;
     border: 0px;
     border-style: solid;
     border-color: #161e54;
-    border-width: 2.5px;
     color: #161e54;
     ${({ filled }) => filled && `border:1px solid #ddd`};
     ${({ error }) => error && `border-color:#d32f2f;`}
