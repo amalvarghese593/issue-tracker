@@ -248,7 +248,7 @@ const DataTable = ({
   return (
     <Styles>
       {countTitleLabel && (
-        <strong className="">{`${countTitleLabel} ${data?.length}`}</strong>
+        <span className="">{`${countTitleLabel} ${data?.length}`}</span>
       )}
       <div className="pb-4 bg-white shadowContainer">
         <div className="d-flex flex-column  tableFilter">
@@ -376,9 +376,15 @@ const DataTable = ({
               ) : (
                 page.map((row, i) => {
                   prepareRow(row);
+                  const status = row.original.status
+                    .toLowerCase()
+                    .replace(" ", "");
                   return (
                     <Fragment key={i}>
-                      <tr {...row.getRowProps()} className="table-row">
+                      <tr
+                        {...row.getRowProps()}
+                        className={`table-row status status-${status}`}
+                      >
                         {row.cells.map((cell, cellIdx) => {
                           return typeof cell.column.collapsed !== "undefined" ||
                             collapsed === false ? null : (
@@ -507,9 +513,9 @@ const CollapseButton = ({ collapsed, handleCollapse, index }) => {
         }
       >
         {index === collapsed ? (
-          <i className="fa-solid fa-minus"></i>
+          <i className="fal fa-minus"></i>
         ) : (
-          <i className="fa-solid fa-plus"></i>
+          <i className="fal fa-plus"></i>
         )}
       </button>
     </Fragment>

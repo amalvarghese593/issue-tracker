@@ -208,6 +208,61 @@ svg.form-select-arrow {
   top: 0;
   display: flex;
 }
+.filters-cntr {
+  /* border: 1px solid red; */
+  padding: 10px;
+  display: flex;
+  gap: 14px;
+  /* justify-content: end; */
+  align-items: center;
+}
+.filters-cntr span {
+  /* margin-right: auto; */
+  font-weight: 500;
+  padding: 5px;
+}
+.filter {
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: start;
+}
+.filter select {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: capitalize;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: 0;
+  padding: 0.375rem 1rem 0.375rem 0.75rem;
+}
+.filter select,
+label {
+  color: rgb(33, 37, 41);
+}
+.filter-chips-cntr {
+  padding: 5px;
+  display: inline-flex;
+  gap: 10px;
+}
+.filter-card {
+  /* border: 1px solid blue; */
+  text-align: start;
+  padding: 0px 0px 10px 20px;
+}
+.filter-chip {
+  background-color: #f1f1f1;
+  font-size: 0.9em;
+  font-family: Roboto Mono, Consolas, Bitstream Vera Sans Mono, Courier New;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+.filter-chip .close-btn {
+  margin-left: 5px;
+  cursor: pointer;
+}
 @media (max-width: 920px) {
   .popover-pnl {
     position: fixed;

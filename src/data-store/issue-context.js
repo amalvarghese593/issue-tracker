@@ -2,6 +2,7 @@ import { useContext, createContext } from "react";
 import { useSso } from "../sso/sso/SsoProvider";
 import { IDLE } from "../sso/constants";
 import { useApicall } from "../hooks/useApicall";
+import React from "react";
 
 const IssuesContext = createContext({
   data: [],
@@ -20,10 +21,10 @@ export const IssuesProvider = ({ children }) => {
     dependancies: [token],
     callFetch,
   });
+  const value = React.useMemo(() => ({ data, setData }), [data]);
   return (
-    <IssuesContext.Provider value={{ data, setData }}>
-      {children}
-    </IssuesContext.Provider>
+    // <IssuesContext.Provider value={{ data, setData }}>
+    <IssuesContext.Provider value={value}>{children}</IssuesContext.Provider>
   );
 };
 export const useIssuesData = () => useContext(IssuesContext);

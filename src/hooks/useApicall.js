@@ -12,8 +12,10 @@ export const useApicall = ({
   onSuccess = () => {},
   onError = () => {},
 }) => {
+  //its better to put state inside hook coz we dont have to create state in whichever component we
+  //need data. Also before calling api we need to check if data is already stored in the cache (CACHING)
   const [data, setData] = useState([]);
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const baseUrl = process.env.REACT_APP_API_URL;
   const fetchRef = useRef();
 

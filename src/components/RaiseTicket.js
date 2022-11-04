@@ -75,6 +75,8 @@ export const RaiseTicket = () => {
     "I want to request a new feature",
     "I want to consult Marketing team",
     "I want to consult HR team",
+    "UI issue",
+    "Backend issue",
   ];
   const goBack = () => {
     navigate("/", true);

@@ -161,7 +161,7 @@ export const useCloumns = () => {
                 style={{ width: "75%" }}
               >
                 <Select
-                  options={["Resolved", "Unresolved", "In Progress"]}
+                  options={["Open", "Resolved", "Unresolved", "In Progress"]}
                   height="40px"
                   onChange={updateStatus}
                   value={status}
@@ -169,11 +169,13 @@ export const useCloumns = () => {
               </div>
             ) : (
               <span>
-                {original.status === "open"
+                {
+                  original.status /* === "open"
                   ? "Unresolved"
                   : original.status === "In Progress"
                   ? "In Progress"
-                  : "Resolved"}
+                  : "Resolved" */
+                }
               </span>
             )}
           </div>
