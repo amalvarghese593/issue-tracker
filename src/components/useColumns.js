@@ -134,6 +134,14 @@ export const useCloumns = () => {
       breakpoint: "xs sm md lg xlg",
     },
     {
+      accessor: "createdDate",
+      Header: "Created at",
+      breakpoint: "xs sm md lg xlg",
+      Cell: ({ row: { original } }) => {
+        return <span>{original.createdDate.slice(0, 10)}</span>;
+      },
+    },
+    {
       accessor: "status",
       Header: "Status",
       breakpoint: "xs",
